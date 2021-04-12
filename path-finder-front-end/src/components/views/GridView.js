@@ -7,9 +7,9 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const styles = {
 	grid: {
-		paddingTop: '30%',
-		paddingLeft: 10,
-		paddingRight: 10,
+		padding: '10%',
+		paddingLeft: 40,
+		paddingRight: 60,
 	},
 	row: {
 		lineHeight: 0,
@@ -19,13 +19,18 @@ const styles = {
 function GridView(props) {
 	return (
 		<Container style={styles.grid}>
-			{props.nodes.map((row) => {
+			{props.nodes.map((row, rowIndex) => {
 				return (
-					<Row style={styles.row}>
+					<Row key={rowIndex} style={styles.row}>
 						<Col>
-							{row.map((node) => (
-								<Node />
-							))}
+							{row.map((node, nodeIndex) => {
+								return (
+									<Node
+										key={[rowIndex, nodeIndex]}
+										position={[rowIndex, nodeIndex]}
+									/>
+								);
+							})}
 						</Col>
 					</Row>
 				);
