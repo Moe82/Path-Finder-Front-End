@@ -4,18 +4,20 @@ import GridView from '../views/GridView';
 
 export default class Grid extends Component {
 	constructor(props) {
+		console.log('width:', window.innerWidth);
+		console.log('height:', window.innerHeight);
 		super(props);
 		this.state = {
-			gridLength: 33,
-			gridWidth: 26,
+			numCols: 50,
+			numRows: 30,
 			nodes: [],
 		};
 	}
 	componentDidMount = () => {
 		let nodes = [];
-		for (let column = 0; column < this.state.gridWidth; column++) {
+		for (let column = 0; column < this.state.numRows; column++) {
 			let rows = [];
-			for (let row = 0; row < this.state.gridLength; row++) {
+			for (let row = 0; row < this.state.numCols; row++) {
 				rows.push([]);
 			}
 			nodes.push(rows);
