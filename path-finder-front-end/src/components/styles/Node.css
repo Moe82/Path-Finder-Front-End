@@ -1,8 +1,4 @@
 .node {
 	display: inline-block;
-	width: 3%;
-	height: 0;
-	padding-bottom: 3%;
 	outline: 2px solid #61dbfb;
-	background-color: #272822;
 }
