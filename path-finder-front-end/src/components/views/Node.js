@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import '../styles/Node.css';
 
 function Node(props) {
-	const [backgroundColor, setColor] = useState('#272822');
+	const [backgroundColor, setColor] = useState('#FFFFFF');
 	const [isHighlited, setHighlited] = useState(false);
 	return (
 		<div
@@ -15,11 +15,10 @@ function Node(props) {
 				paddingBottom: '2%',
 			}}
 			onDragOver={(e) => {
-				setColor('#FFFFFF');
+				setColor('#2D2A2E');
 				setHighlited(true);
 			}}
-		></div>
+		/>
 	);
 }
-
 export default Node;
