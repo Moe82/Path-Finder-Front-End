@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
 import GridView from '../views/GridView';
+import Node from '../views/Node';
+
+import StartNode from '../views/StartNode';
+import EndNode from '../views/EndNode';
 
 export default class Grid extends Component {
 	constructor(props) {
-		console.log('width:', window.innerWidth);
-		console.log('height:', window.innerHeight);
 		super(props);
 		this.state = {
 			numCols: 50,
@@ -13,15 +15,19 @@ export default class Grid extends Component {
 			nodes: [],
 		};
 	}
+
 	componentDidMount = () => {
+		// construct an 2d array of nodes.
 		let nodes = [];
-		for (let column = 0; column < this.state.numRows; column++) {
-			let rows = [];
-			for (let row = 0; row < this.state.numCols; row++) {
-				rows.push([]);
+		for (let row = 0; row < this.state.numRows; row++) {
+			let currentColumn = [];
+			for (let col = 0; col < this.state.numCols; col++) {
+				currentColumn.push(<Node x={col} y={row} />);
 			}
-			nodes.push(rows);
+			nodes.push(currentColumn);
 		}
+		nodes[10][10] = <StartNode />;
+		nodes[22][20] = <EndNode />;
 		this.setState({ nodes });
 	};
 
