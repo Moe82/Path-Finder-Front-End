@@ -1,7 +1,13 @@
 import React from 'react';
 
-function App() {
-	return <div>test</div>;
-}
+import Grid from './containers/GridContainer';
+
+const App = () => {
+	return (
+		<div>
+			<Grid />
+		</div>
+	);
+};
 
 export default App;
