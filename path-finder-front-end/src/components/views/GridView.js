@@ -24,12 +24,7 @@ function GridView(props) {
 					<Row key={rowIndex} style={styles.row}>
 						<Col>
 							{row.map((node, nodeIndex) => {
-								return (
-									<Node
-										key={[rowIndex, nodeIndex]}
-										position={[rowIndex, nodeIndex]}
-									/>
-								);
+								return node;
 							})}
 						</Col>
 					</Row>
