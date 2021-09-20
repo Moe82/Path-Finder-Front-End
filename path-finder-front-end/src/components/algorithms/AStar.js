@@ -3,7 +3,7 @@ import Node from '../views/Node';
 import ReactDOM from 'react';
 
 function AStar(map, start, end) {
-	let nodesChecked = [];
+	let nodesVisited = [];
 
 	// object to represent each node on the map.
 	function node(x, y, id) {
@@ -77,18 +77,14 @@ function AStar(map, start, end) {
 		}
 
 		let current = openSet[smallestFScoreIndex];
+
 		if (
 			openSet[smallestFScoreIndex].x == endNode.x &&
 			openSet[smallestFScoreIndex].y == endNode.y
 		) {
 			// if this condition is met, return the array of nodes checked and the
 			// array containing the shortest path form the startNode to the endNode.
-			// var temp = current;
-			// path.push(temp);
-			// while (temp.previous) {
-			// 	path.push(temp.previous);
-			// 	temp = temp.previous;
-			// }
+
 			path = [];
 			var temp = current;
 			path.push(temp);
@@ -96,7 +92,7 @@ function AStar(map, start, end) {
 				path.push(temp.previous);
 				temp = temp.previous;
 			}
-			return [nodesChecked, path];
+			return [nodesVisited, path];
 		}
 
 		removeFromArray(openSet, current);
@@ -123,7 +119,7 @@ function AStar(map, start, end) {
 					neighbor.h = heuristic(neighbor, endNode);
 					neighbor.f = neighbor.g + neighbor.h;
 					neighbor.previous = current;
-					nodesChecked.push(neighbor);
+					nodesVisited.push(neighbor);
 				}
 			}
 		}
