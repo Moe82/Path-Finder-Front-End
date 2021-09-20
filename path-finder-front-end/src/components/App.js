@@ -83,19 +83,6 @@ export default class App extends Component {
 		}
 	};
 
-	visualizeAlgorithm = (nodes, color, updateSingleNode) => {
-		return new Promise((resolve, reject) => {
-			(function loop(i) {
-				setTimeout(function () {
-					if (i < nodes.length) {
-						updateSingleNode(nodes[i].x, nodes[i].y, color);
-					} else resolve();
-					loop(i + 1);
-				}, 10);
-			})(0);
-		});
-	};
-
 	visualizePath = async (data, updateSingleNode, color) => {
 		// await this.visualizeAlgorithm(
 		// 	nodesChecked,
@@ -118,13 +105,11 @@ export default class App extends Component {
 
 		// console.log();
 		let path = data[0];
-		let asd = data[1];
-		console.log(path);
-		console.log(asd);
+		let nodesVisited = data[1];
 		(function loop(i) {
 			setTimeout(function () {
 				if (i < path.length) {
-					if (asd.includes(path[i])) {
+					if (nodesVisited.includes(path[i])) {
 						updateSingleNode(path[i].x, path[i].y, 'pink');
 					} else updateSingleNode(path[i].x, path[i].y, 'blue');
 				}
@@ -140,7 +125,7 @@ export default class App extends Component {
 					variant="dark"
 					onClick={() => {
 						let data = AStar(this.state.map);
-						// this.visualizePath(data[1], this.updateSingleNode, 'blue');
+						console.log(data);
 						this.visualizePath(data, this.updateSingleNode, 'pink');
 					}}
 				>
