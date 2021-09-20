@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import '../styles/Node.css';
 import Arrow from '../../images/arrow.png';
 
-function StartNode(props) {
+function EndNode(props) {
 	const [backgroundColor, setColor] = useState('#FF6188');
 	const [isHighlited, setHighlited] = useState(false);
 	return (
@@ -23,4 +23,4 @@ function StartNode(props) {
 		></div>
 	);
 }
-export default StartNode;
+export default EndNode;

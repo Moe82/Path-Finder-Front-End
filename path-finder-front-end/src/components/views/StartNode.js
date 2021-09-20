@@ -16,8 +16,6 @@ function StartNode(props) {
 				width: '2%',
 				paddingBottom: '2%',
 			}}
-			// onDragOver={(e) => {
-			// }}
 		></div>
 	);
 }
