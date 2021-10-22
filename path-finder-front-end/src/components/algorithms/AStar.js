@@ -2,7 +2,7 @@ import React from 'react';
 import Node from '../views/Node';
 import ReactDOM from 'react';
 
-function AStar(map, start, end) {
+function AStar(m, start, end) {
   let nodesVisited = [];
 
   // object to represent each node on the map.
@@ -42,6 +42,13 @@ function AStar(map, start, end) {
       if (array[i] == elt) array.splice(i, 1);
   }
 
+  let map = [];
+  for (var i = 0; i < m.length; i++) {
+    map.push([]);
+    for (var j = 0; j < m[i].length; j++) {
+      map[i][j] = m[i][j];
+    }
+  }
   /*
   Modify the elements of the map array to include information needed by the algorithm.
   The map array is transformed from a list of id's (see comment on line 6) to a list
