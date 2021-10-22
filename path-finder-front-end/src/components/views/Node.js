@@ -13,7 +13,6 @@ function Node(props) {
 
   const [backgroundColor, setColor] = useState(nodeTypeToColorMap[props.type]);
   let map = props.map;
-  console.log(props.type);
   return (
     <div
       draggable="true"
