@@ -1,10 +1,6 @@
 import React from 'react';
-
 import Node from './Node';
-import StartNode from './StartNode';
-import EndNode from './EndNode';
 import '../styles/Grid.css';
-
 import { Container, Row, Col } from 'react-bootstrap';
 
 const styles = {
@@ -34,7 +30,7 @@ function GridView(props) {
                     y={colIndex}
                     type={node}
                     map={props.map}
-                    setWalls={props.setWalls}
+                    updateNodes={props.updateNodes}
                   />
                 );
               })}

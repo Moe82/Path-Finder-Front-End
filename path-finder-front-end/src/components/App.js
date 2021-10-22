@@ -45,10 +45,10 @@ export default class App extends Component {
     });
   };
 
-  setWalls = (nodes) => {
+  updateNodes = (nodes, type) => {
     for (let row = 0; row < nodes.length; row++) {
       for (let col = 0; col < this.state.numCols; col++) {
-        if (nodes[row][col] === 3) {
+        if (nodes[row][col] === type) {
           let m = this.state.map;
           m[row][col] = 3;
           this.setState({ map: m });
@@ -90,10 +90,8 @@ export default class App extends Component {
           A-Star
         </Button>
         <GridView
-          nodes={this.state.nodes}
           map={this.state.map}
-          updateNode={this.updateNode}
-          setWalls={this.setWalls}
+          updateNodes={this.updateNodes}
         ></GridView>
       </div>
     );

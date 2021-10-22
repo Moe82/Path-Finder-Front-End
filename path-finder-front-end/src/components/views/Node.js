@@ -38,7 +38,7 @@ function Node(props) {
         }
       }}
       onDragEnd={(e) => {
-        props.setWalls(map);
+        props.updateNodes(map, 3);
       }}
     />
   );
