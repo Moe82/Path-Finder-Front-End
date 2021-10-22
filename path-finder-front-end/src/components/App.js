@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Button } from 'react-bootstrap';
 
-import { GridView, Node, StartNode, EndNode } from './views';
+import { GridView, Node } from './views';
 import AStar from './algorithms/AStar';
 
 export default class App extends Component {
@@ -11,10 +11,6 @@ export default class App extends Component {
     this.state = {
       numCols: 40,
       numRows: 40,
-
-      // nodes is an array of Node components
-      nodes: [],
-
       // map is an simple array representation of all the nodes. A value of 0 represents a free path,
       // 1 represents the start node, 2 represents the end node, 3 represents a wall.
       map: [],
@@ -30,47 +26,23 @@ export default class App extends Component {
       }
       m.push(currentColumn);
     }
-    m[1][1] = 1; // start nde
-    m[9][9] = 2; // end node
+
+    // set default locations for start and end nodes.
+    let startNodeCoords = [1, 1];
+    let endNodeCoords = [9, 9];
+    m[startNodeCoords[0]][startNodeCoords[1]] = 1; // start node
+    m[endNodeCoords[0]][endNodeCoords[1]] = 2; // end node
+
+    // construct an 2d array of nodes.
     this.setState({ map: m }, () => {
-      // construct an 2d array of nodes.
       let nodes = [];
       for (let row = 0; row < this.state.numRows; row++) {
         let currentColumn = [];
         for (let col = 0; col < this.state.numCols; col++) {
-          currentColumn.push(
-            <Node
-              key={[col, row]}
-              x={row}
-              y={col}
-              backgroundColor={'#FFFFFF'}
-              nodes={this.state.map}
-              setWalls={this.setWalls}
-            />
-          );
+          currentColumn.push(0);
         }
-        nodes.push(currentColumn);
       }
-
-      nodes[9][9] = <EndNode x={9} y={9} />;
-      nodes[1][1] = <StartNode x={1} y={1} />;
-      this.setState({ nodes: nodes });
     });
-  };
-
-  updateSingleNode = (row, col, color) => {
-    // "update" a single node by reconstructing a new one.
-    let n = this.state.nodes;
-    n[row][col] = (
-      <Node
-        Key={[col, row]}
-        x={col}
-        y={row}
-        backgroundColor={color}
-        updateNode={this}
-      />
-    );
-    this.setState({ nodes: n });
   };
 
   setWalls = (nodes) => {
@@ -85,20 +57,22 @@ export default class App extends Component {
     }
   };
 
-  visualizePath = async (data, updateSingleNode, color) => {
-    let path = data[0];
-    let nodesVisited = data[1];
-
-    (function loop(i) {
-      setTimeout(function () {
-        if (i < path.length) {
-          if (nodesVisited.includes(path[i])) {
-            updateSingleNode(path[i].x, path[i].y, 'pink');
-          } else updateSingleNode(path[i].x, path[i].y, 'blue');
-        }
-        loop(i + 1);
-      }, 10);
-    })(0);
+  visualizePath = async (path, type) => {
+    return new Promise((resolve, reject) => {
+      let loop = (i) => {
+        setTimeout(() => {
+          if (i < path.length) {
+            let m = this.state.map;
+            m[path[i].x][path[i].y] = type;
+            this.setState({ map: m });
+          } else {
+            resolve();
+          }
+          loop(i + 1);
+        }, 10);
+      };
+      loop(0);
+    });
   };
 
   render() {
@@ -108,14 +82,16 @@ export default class App extends Component {
           variant="dark"
           onClick={() => {
             let data = AStar(this.state.map);
-            this.visualizePath(data, this.updateSingleNode, 'pink');
+            this.visualizePath(data[0], 4).then(() => {
+              this.visualizePath(data[1], 5);
+            });
           }}
         >
           A-Star
         </Button>
         <GridView
           nodes={this.state.nodes}
-          // map={this.state.map}
+          map={this.state.map}
           updateNode={this.updateNode}
           setWalls={this.setWalls}
         ></GridView>
