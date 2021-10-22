@@ -21,12 +21,22 @@ const styles = {
 function GridView(props) {
   return (
     <Container style={styles.grid}>
-      {props.nodes.map((row, rowIndex) => {
+      {props.map.map((row, rowIndex) => {
         return (
           <Row key={rowIndex} style={styles.row}>
             <Col>
-              {row.map((node, nodeIndex) => {
-                return node;
+              {row.map((node, colIndex) => {
+                let row = rowIndex;
+                return (
+                  <Node
+                    key={[colIndex, rowIndex]}
+                    x={rowIndex}
+                    y={colIndex}
+                    type={node}
+                    map={props.map}
+                    setWalls={props.setWalls}
+                  />
+                );
               })}
             </Col>
           </Row>
@@ -34,43 +44,6 @@ function GridView(props) {
       })}
     </Container>
   );
-  // return (
-  //   <Container style={styles.grid}>
-  //     {props.nodes.map((row, rowIndex) => {
-  //       return (
-  //         <Row key={rowIndex} style={styles.row}>
-  //           <Col>
-  //             {row.map((node, nodeIndex) => {
-  //               if (node == 1) return <StartNode x={rowIndex} y={nodeIndex} />;
-  //               else if (node == 2) return <EndNode />;
-  //               else if (node == 4) {
-  //                 return (
-  //                   <Node
-  //                     updateNode={props.updateNode}
-  //                     updateMultipleNode={props.updateMultipleNode}
-  //                     x={rowIndex}
-  //                     y={nodeIndex}
-  //                     nodes={props.nodes}
-  //                     backgroundColor={'yellow'}
-  //                   />
-  //                 );
-  //               } else
-  //                 return (
-  //                   <Node
-  //                     updateNode={props.updateNode}
-  //                     updateMultipleNode={props.updateMultipleNode}
-  //                     x={rowIndex}
-  //                     y={nodeIndex}
-  //                     nodes={props.nodes}
-  //                   />
-  //                 );
-  //             })}
-  //           </Col>
-  //         </Row>
-  //       );
-  //     })}
-  //   </Container>
-  // );
 }
 
 export default GridView;
