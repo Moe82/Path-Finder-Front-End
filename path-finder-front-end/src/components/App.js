@@ -9,8 +9,8 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numCols: 40,
-      numRows: 40,
+      numCols: 50,
+      numRows: 50,
       // map is an simple array representation of all the nodes. A value of 0 represents a free path,
       // 1 represents the start node, 2 represents the end node, 3 represents a wall.
       map: [],
@@ -45,13 +45,13 @@ export default class App extends Component {
     });
   };
 
-  updateNodes = (nodes, type) => {
+  updateNodes = (nodes) => {
+    let map = this.state.map;
     for (let row = 0; row < nodes.length; row++) {
       for (let col = 0; col < this.state.numCols; col++) {
-        if (nodes[row][col] === type) {
-          let m = this.state.map;
-          m[row][col] = 3;
-          this.setState({ map: m });
+        if (nodes[row][col] !== map[row][col]) {
+          map[row][col] = nodes[row][col];
+          this.setState({ map: map });
         }
       }
     }
