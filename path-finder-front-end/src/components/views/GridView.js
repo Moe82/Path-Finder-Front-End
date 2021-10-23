@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Node from './Node';
 import '../styles/Grid.css';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -6,8 +6,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 const styles = {
   grid: {
     padding: '10%',
-    paddingLeft: 40,
-    paddingRight: 60,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   row: {
     lineHeight: 0,
@@ -15,6 +15,8 @@ const styles = {
 };
 
 function GridView(props) {
+  const [repositioningEndNode, setRepositioningEndNode] = useState(false);
+  const [repositioningStartNode, setRepositioningStartNode] = useState(false);
   return (
     <Container style={styles.grid}>
       {props.map.map((row, rowIndex) => {
@@ -31,6 +33,10 @@ function GridView(props) {
                     type={node}
                     map={props.map}
                     updateNodes={props.updateNodes}
+                    repositioningEndNode={repositioningEndNode}
+                    setRepositioningEndNode={setRepositioningEndNode}
+                    repositioningStartNode={repositioningStartNode}
+                    setRepositioningStartNode={setRepositioningStartNode}
                   />
                 );
               })}
