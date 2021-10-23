@@ -10,6 +10,7 @@ export default class App extends Component {
       // map is an simple array representation of all the nodes. A value of 0 represents a free path,
       // 1 represents the start node, 2 represents the end node, 3 represents a wall.
       map: [],
+      visualizationInProgress: false,
     };
   }
 
@@ -54,6 +55,7 @@ export default class App extends Component {
   };
 
   visualizeAStar = async (path, type) => {
+    this.setState({ visualizationInProgress: true });
     return new Promise((resolve, reject) => {
       let loop = (i) => {
         setTimeout(() => {
@@ -81,6 +83,7 @@ export default class App extends Component {
         <GridView
           map={this.state.map}
           updateNodes={this.updateNodes}
+          visualizationInProgress={this.state.visualizationInProgress}
         ></GridView>
       </div>
     );

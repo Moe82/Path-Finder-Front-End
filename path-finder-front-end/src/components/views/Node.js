@@ -35,48 +35,54 @@ function Node(props) {
         paddingBottom: '2%',
       }}
       onDragStart={(e) => {
-        if (props.type === nodeTypeToIDMap['end']) {
-          map[props.x][props.y] = nodeTypeToIDMap['free path'];
-          setColor(nodeIDToColorMap[0]);
-          props.updateNodes(map);
-          props.setRepositioningEndNode(true);
-        } else if (props.type === nodeTypeToIDMap['start']) {
-          map[props.x][props.y] = nodeTypeToIDMap['free path'];
-          setColor(nodeIDToColorMap[0]);
-          props.updateNodes(map);
-          props.setRepositioningStartNode(true);
+        if (!props.visualizationInProgress) {
+          if (props.type === nodeTypeToIDMap['end']) {
+            map[props.x][props.y] = nodeTypeToIDMap['free path'];
+            setColor(nodeIDToColorMap[0]);
+            props.updateNodes(map);
+            props.setRepositioningEndNode(true);
+          } else if (props.type === nodeTypeToIDMap['start']) {
+            map[props.x][props.y] = nodeTypeToIDMap['free path'];
+            setColor(nodeIDToColorMap[0]);
+            props.updateNodes(map);
+            props.setRepositioningStartNode(true);
+          }
         }
       }}
       onDragOver={(e) => {
         e.preventDefault();
-        if (!props.repositioningEndNode && !props.repositioningStartNode) {
-          let row = props.x;
-          let col = props.y;
-          if (
-            noSurroundingWalls(row, col, map) ||
-            (row > 0 && map[row - 1][col] === 3) ||
-            (row < map.length - 1 && map[row + 1][col] === 3) ||
-            (col > 0 && map[row][col - 1] === 3) ||
-            (col < map[0].length - 1 && map[row][col + 1] === 3)
-          ) {
-            map[props.x][props.y] = 3;
-            setColor(nodeIDToColorMap[3]);
+        if (!props.visualizationInProgress) {
+          if (!props.repositioningEndNode && !props.repositioningStartNode) {
+            let row = props.x;
+            let col = props.y;
+            if (
+              noSurroundingWalls(row, col, map) ||
+              (row > 0 && map[row - 1][col] === 3) ||
+              (row < map.length - 1 && map[row + 1][col] === 3) ||
+              (col > 0 && map[row][col - 1] === 3) ||
+              (col < map[0].length - 1 && map[row][col + 1] === 3)
+            ) {
+              map[props.x][props.y] = 3;
+              setColor(nodeIDToColorMap[3]);
+            }
           }
         }
       }}
       onDrop={(e) => {
-        if (props.repositioningEndNode) {
-          map[props.x][props.y] = 2;
-          setColor(nodeIDToColorMap[2]);
-          props.updateNodes(map);
-          props.setRepositioningEndNode(false);
-        } else if (props.repositioningStartNode) {
-          map[props.x][props.y] = 1;
-          setColor(nodeIDToColorMap[1]);
-          props.updateNodes(map);
-          props.setRepositioningStartNode(false);
+        if (!props.visualizationInProgress) {
+          if (props.repositioningEndNode) {
+            map[props.x][props.y] = 2;
+            setColor(nodeIDToColorMap[2]);
+            props.updateNodes(map);
+            props.setRepositioningEndNode(false);
+          } else if (props.repositioningStartNode) {
+            map[props.x][props.y] = 1;
+            setColor(nodeIDToColorMap[1]);
+            props.updateNodes(map);
+            props.setRepositioningStartNode(false);
+          }
+          if (props.type) props.updateNodes(map);
         }
-        if (props.type) props.updateNodes(map);
       }}
     />
   );

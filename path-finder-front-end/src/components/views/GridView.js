@@ -37,6 +37,7 @@ function GridView(props) {
                     setRepositioningEndNode={setRepositioningEndNode}
                     repositioningStartNode={repositioningStartNode}
                     setRepositioningStartNode={setRepositioningStartNode}
+                    visualizationInProgress={props.visualizationInProgress}
                   />
                 );
               })}
