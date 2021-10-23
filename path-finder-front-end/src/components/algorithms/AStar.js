@@ -69,9 +69,16 @@ function AStar(m, start, end) {
   let closedSet = [];
   let openSet = [];
 
-  // this needs to be fixed later
-  let endNode = map[9][9];
-  let startNode = map[1][1];
+  const findNodeByID = (id) => {
+    for (let x = 0; x < map.length; x++) {
+      for (let y = 0; y < map[x].length; y++) {
+        if (map[x][y].id === id) return map[x][y];
+      }
+    }
+  };
+
+  let endNode = findNodeByID(2);
+  let startNode = findNodeByID(1);
   let path = [];
 
   openSet.push(startNode);
