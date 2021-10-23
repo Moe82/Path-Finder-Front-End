@@ -5,9 +5,9 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const styles = {
   grid: {
-    padding: '10%',
-    paddingLeft: 20,
-    paddingRight: 20,
+    padding: '1%',
+    paddingLeft: 1,
+    paddingRight: 1,
   },
   row: {
     lineHeight: 0,
