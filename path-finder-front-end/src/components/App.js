@@ -14,7 +14,7 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount = () => {
+  buildMap = () => {
     let m = [];
     for (let row = 0; row < this.state.numRows; row++) {
       let currentColumn = [];
@@ -23,13 +23,11 @@ export default class App extends Component {
       }
       m.push(currentColumn);
     }
-
     // set default locations for start and end nodes.
     let startNodeCoords = [1, 1];
     let endNodeCoords = [9, 9];
     m[startNodeCoords[0]][startNodeCoords[1]] = 1; // start node
     m[endNodeCoords[0]][endNodeCoords[1]] = 2; // end node
-
     // construct an 2d array of nodes.
     this.setState({ map: m }, () => {
       let nodes = [];
@@ -40,6 +38,11 @@ export default class App extends Component {
         }
       }
     });
+    this.setState({ visualizationInProgress: false });
+  };
+
+  componentDidMount = () => {
+    this.buildMap();
   };
 
   updateNodes = (nodes) => {
@@ -79,7 +82,12 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <NavBar visualizeAStar={this.visualizeAStar} map={this.state.map} />
+        <NavBar
+          visualizeAStar={this.visualizeAStar}
+          map={this.state.map}
+          buildMap={this.buildMap}
+          visualizationInProgress={this.state.visualizationInProgress}
+        />
         <GridView
           map={this.state.map}
           updateNodes={this.updateNodes}

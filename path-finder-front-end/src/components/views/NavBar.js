@@ -55,7 +55,10 @@ export default function NavBar(props) {
               size="sm"
               variant="primary"
               onClick={() => {
-                visualize();
+                if (props.visualizationInProgress) {
+                  props.buildMap();
+                  setAlgorithmSelected(false);
+                } else visualize();
               }}
             >
               Visualize
