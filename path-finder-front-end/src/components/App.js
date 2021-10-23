@@ -61,10 +61,13 @@ export default class App extends Component {
     return new Promise((resolve, reject) => {
       let loop = (i) => {
         setTimeout(() => {
-          if (i < path.length) {
-            let m = this.state.map;
-            m[path[i].x][path[i].y] = type;
-            this.setState({ map: m });
+          if (
+            i < path.length &&
+            ![1, 2].includes(this.state.map[path[i].x][path[i].y])
+          ) {
+            let tempMap = this.state.map;
+            tempMap[path[i].x][path[i].y] = type;
+            this.setState({ map: tempMap });
           } else {
             resolve();
           }
