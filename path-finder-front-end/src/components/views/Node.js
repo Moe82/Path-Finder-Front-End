@@ -7,8 +7,8 @@ function Node(props) {
     1: '#A9DC76', // start node
     2: '#FF6188', // end node
     3: '#2D2A2E', // wall
-    4: '#A9DC76', // node being analyzed
-    5: '#FF0000', // node that is part of shortest path
+    4: '#AB9DF2', // node being analyzed
+    5: '#2D2A2E', // node that is part of shortest path
   };
 
   const nodeTypeToIDMap = {
