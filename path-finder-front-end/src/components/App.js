@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-
-import { Button } from 'react-bootstrap';
-
-import { GridView, Node } from './views';
-import AStar from './algorithms/AStar';
+import { GridView, NavBar } from './views';
 
 export default class App extends Component {
   constructor(props) {
@@ -57,7 +53,7 @@ export default class App extends Component {
     }
   };
 
-  visualizePath = async (path, type) => {
+  visualizeAStar = async (path, type) => {
     return new Promise((resolve, reject) => {
       let loop = (i) => {
         setTimeout(() => {
@@ -81,17 +77,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <Button
-          variant="dark"
-          onClick={() => {
-            let data = AStar(this.state.map);
-            this.visualizePath(data[0], 4).then(() => {
-              this.visualizePath(data[1], 5);
-            });
-          }}
-        >
-          A-Star
-        </Button>
+        <NavBar visualizeAStar={this.visualizeAStar} map={this.state.map} />
         <GridView
           map={this.state.map}
           updateNodes={this.updateNodes}
