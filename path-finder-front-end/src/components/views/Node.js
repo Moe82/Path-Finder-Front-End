@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Node.css';
 
 function Node(props) {
@@ -19,18 +19,21 @@ function Node(props) {
   };
 
   let map = props.map;
-  const [draggingNodeFlag, setDraggingNodeFlag] = useState(
-    map[map.length - 1][map[map[0].length - 1]]
+  const [backgroundColor, setBackgroundColor] = useState(
+    nodeIDToColorMap[props.type]
   );
-  const [backgroundColor, setColor] = useState(nodeIDToColorMap[props.type]);
+
+  useEffect(() => {
+    console.log('BOOM');
+    setBackgroundColor(nodeIDToColorMap[props.type]);
+  }, [props.type]);
 
   return (
     <div
       draggable="true"
       className={'node'}
       style={{
-        backgroundColor:
-          props.type !== 0 ? nodeIDToColorMap[props.type] : backgroundColor,
+        backgroundColor: backgroundColor,
         width: '2%',
         paddingBottom: '2%',
       }}
@@ -38,12 +41,12 @@ function Node(props) {
         if (!props.visualizationInProgress) {
           if (props.type === nodeTypeToIDMap['end']) {
             map[props.x][props.y] = nodeTypeToIDMap['free path'];
-            setColor(nodeIDToColorMap[0]);
+            setBackgroundColor(nodeIDToColorMap[0]);
             props.updateNodes(map);
             props.setRepositioningEndNode(true);
           } else if (props.type === nodeTypeToIDMap['start']) {
             map[props.x][props.y] = nodeTypeToIDMap['free path'];
-            setColor(nodeIDToColorMap[0]);
+            setBackgroundColor(nodeIDToColorMap[0]);
             props.updateNodes(map);
             props.setRepositioningStartNode(true);
           }
@@ -63,7 +66,7 @@ function Node(props) {
               (col < map[0].length - 1 && map[row][col + 1] === 3)
             ) {
               map[props.x][props.y] = 3;
-              setColor(nodeIDToColorMap[3]);
+              setBackgroundColor(nodeIDToColorMap[3]);
             }
           }
         }
@@ -72,12 +75,12 @@ function Node(props) {
         if (!props.visualizationInProgress) {
           if (props.repositioningEndNode) {
             map[props.x][props.y] = 2;
-            setColor(nodeIDToColorMap[2]);
+            setBackgroundColor(nodeIDToColorMap[2]);
             props.updateNodes(map);
             props.setRepositioningEndNode(false);
           } else if (props.repositioningStartNode) {
             map[props.x][props.y] = 1;
-            setColor(nodeIDToColorMap[1]);
+            setBackgroundColor(nodeIDToColorMap[1]);
             props.updateNodes(map);
             props.setRepositioningStartNode(false);
           }
