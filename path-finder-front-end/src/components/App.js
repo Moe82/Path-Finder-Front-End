@@ -15,29 +15,20 @@ export default class App extends Component {
   }
 
   buildMap = () => {
-    let m = [];
+    let map = [];
     for (let row = 0; row < this.state.numRows; row++) {
       let currentColumn = [];
       for (let col = 0; col < this.state.numCols; col++) {
         currentColumn.push(0);
       }
-      m.push(currentColumn);
+      map.push(currentColumn);
     }
     // set default locations for start and end nodes.
     let startNodeCoords = [1, 1];
     let endNodeCoords = [9, 9];
-    m[startNodeCoords[0]][startNodeCoords[1]] = 1; // start node
-    m[endNodeCoords[0]][endNodeCoords[1]] = 2; // end node
-    // construct an 2d array of nodes.
-    this.setState({ map: m }, () => {
-      let nodes = [];
-      for (let row = 0; row < this.state.numRows; row++) {
-        let currentColumn = [];
-        for (let col = 0; col < this.state.numCols; col++) {
-          currentColumn.push(0);
-        }
-      }
-    });
+    map[startNodeCoords[0]][startNodeCoords[1]] = 1; // start node
+    map[endNodeCoords[0]][endNodeCoords[1]] = 2; // end node
+    this.setState({ map });
     this.setState({ visualizationInProgress: false });
   };
 
