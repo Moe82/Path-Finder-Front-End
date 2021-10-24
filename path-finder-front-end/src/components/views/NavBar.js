@@ -10,11 +10,22 @@ import {
 import AStar from '../algorithms/AStar';
 
 const styles = {
-  customButton: {
+  btn: {
     backgroundColor: '#0B0C10',
     borderColor: '#78DCE8',
     color: '#78DCE8',
     borderRadius: '100px',
+    marginLeft: '10px',
+  },
+  resetBtn: {
+    backgroundColor: '#0B0C10',
+    borderColor: '#F92672',
+    color: '#F92672',
+    borderRadius: '100px',
+    marginLeft: '10px',
+  },
+  tittle: {
+    color: '#78DCE8',
   },
 };
 
@@ -37,7 +48,9 @@ export default function NavBar(props) {
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Pathfinding Visualizer</Navbar.Brand>
+          <Navbar.Brand href="#home" style={styles.tittle}>
+            Pathfinding Visualizer
+          </Navbar.Brand>
           <Nav className="me-auto">
             <NavDropdown title="Algorithms" id="basic-nav-dropdown">
               <NavDropdown.Item
@@ -51,7 +64,18 @@ export default function NavBar(props) {
               </NavDropdown.Item>
             </NavDropdown>
             <Button
-              style={styles.customButton}
+              style={styles.resetBtn}
+              size="sm"
+              variant="primary"
+              onClick={() => {
+                props.buildMap();
+                setAlgorithmSelected(false);
+              }}
+            >
+              Reset
+            </Button>
+            <Button
+              style={styles.btn}
               size="sm"
               variant="primary"
               onClick={() => {
@@ -74,8 +98,3 @@ export default function NavBar(props) {
     </>
   );
 }
-
-// let data = AStar(this.state.map);
-//             this.visualizePath(data[0], 4).then(() => {
-//               this.visualizePath(data[1], 5);
-//             });
