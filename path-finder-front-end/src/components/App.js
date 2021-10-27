@@ -49,6 +49,10 @@ export default class App extends Component {
     this.setState({ map: newMap });
   };
 
+  toggleVisualizationInProgress = (value) => {
+    this.setState({ visualizationInProgress: value });
+  };
+
   visualizeAStar = async (path, type) => {
     this.setState({ visualizationInProgress: true });
     return new Promise((resolve, reject) => {
@@ -79,6 +83,7 @@ export default class App extends Component {
           map={this.state.map}
           buildMap={this.buildMap}
           visualizationInProgress={this.state.visualizationInProgress}
+          toggleVisualizationInProgress={this.toggleVisualizationInProgress}
         />
         <GridView
           map={this.state.map}
