@@ -1,4 +1,4 @@
-function AStar(m) {
+function AStar(m, huristic) {
   let nodesVisited = [];
 
   // object to represent each node on the map.
@@ -20,16 +20,14 @@ function AStar(m) {
       if (x > 0) this.neighbors.push(map[x - 1][y]);
       if (x < col) this.neighbors.push(map[x + 1][y]);
       if (y < row) this.neighbors.push(map[x][y + 1]);
-      if (x < col && y < row) this.neighbors.push(map[x + 1][y + 1]);
-      if (x > 0 && y < row) this.neighbors.push(map[x - 1][y + 1]);
-      if (x < col && y > 0) this.neighbors.push(map[x + 1][y - 1]);
-      if (x > 0 && y > 0) this.neighbors.push(map[x - 1][y - 1]);
     };
   }
 
   function heuristic(a, b) {
-    // returns the euclidean between two points.
-    return Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
+    if (huristic === 'manhattan')
+      return Math.abs(b.x - a.x) + Math.abs(b.y - a.y);
+    else if (huristic === 'euclidean')
+      return Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
   }
 
   function removeFromArray(array, elt) {
