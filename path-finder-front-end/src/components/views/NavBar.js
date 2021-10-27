@@ -46,7 +46,9 @@ export default function NavBar(props) {
       } else {
         toggleNoPathWarning(false);
         props.visualizeAStar(data[0], 4).then(() => {
-          props.visualizeAStar(data[1], 5);
+          props.visualizeAStar(data[1], 5).then(() => {
+            props.toggleVisualizationInProgress(false);
+          });
         });
       }
     }
@@ -76,7 +78,7 @@ export default function NavBar(props) {
               size="sm"
               variant="primary"
               onClick={() => {
-                props.buildMap();
+                if (!props.visualizationInProgress) props.buildMap();
               }}
             >
               Reset
@@ -86,9 +88,7 @@ export default function NavBar(props) {
               size="sm"
               variant="primary"
               onClick={() => {
-                if (props.visualizationInProgress) {
-                  props.buildMap();
-                } else visualize();
+                if (!props.visualizationInProgress) visualize();
               }}
             >
               Visualize
