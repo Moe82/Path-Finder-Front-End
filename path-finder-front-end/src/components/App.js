@@ -38,14 +38,15 @@ export default class App extends Component {
 
   updateNodes = (nodes) => {
     let map = this.state.map;
+    let newMap = Array.from(this.state.map);
     for (let row = 0; row < nodes.length; row++) {
       for (let col = 0; col < this.state.numCols; col++) {
         if (nodes[row][col] !== map[row][col]) {
-          map[row][col] = nodes[row][col];
-          this.setState({ map: map });
+          newMap[row][col] = nodes[row][col];
         }
       }
     }
+    this.setState({ map: newMap });
   };
 
   visualizeAStar = async (path, type) => {
