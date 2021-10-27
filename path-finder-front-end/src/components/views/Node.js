@@ -18,13 +18,12 @@ function Node(props) {
     wall: 3,
   };
 
-  let map = props.map;
+  let map = [...props.map];
   const [backgroundColor, setBackgroundColor] = useState(
     nodeIDToColorMap[props.type]
   );
 
   useEffect(() => {
-    console.log('BOOM');
     setBackgroundColor(nodeIDToColorMap[props.type]);
   }, [props.type]);
 
@@ -83,8 +82,7 @@ function Node(props) {
             setBackgroundColor(nodeIDToColorMap[1]);
             props.updateNodes(map);
             props.setRepositioningStartNode(false);
-          }
-          if (props.type) props.updateNodes(map);
+          } else props.updateNodes(map);
         }
       }}
     />
