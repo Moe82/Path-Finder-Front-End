@@ -7,7 +7,7 @@ import {
   Button,
   Alert,
 } from 'react-bootstrap';
-import AStar from '../algorithms/AStar';
+import { AStar, Dijkstra } from '../algorithms';
 
 const styles = {
   btn: {
@@ -38,8 +38,13 @@ export default function NavBar(props) {
     if (!algorithmSelected) {
       toggleAlgorithmWarning(true);
     } else {
-      if (algorithmSelected === 'A-Star') {
-        data = AStar(props.map);
+      switch (algorithmSelected) {
+        case 'A-Star':
+          data = AStar(props.map);
+          break;
+        case 'Dijkstra':
+          data = Dijkstra(props.map);
+          break;
       }
       if (!data) {
         toggleNoPathWarning(true);
@@ -62,15 +67,27 @@ export default function NavBar(props) {
             Pathfinding Visualizer
           </Navbar.Brand>
           <Nav className="me-auto">
-            <NavDropdown title="Algorithms" id="basic-nav-dropdown">
+            <NavDropdown
+              title={algorithmSelected ? algorithmSelected : 'Algorithms'}
+              id="basic-nav-dropdown"
+            >
               <NavDropdown.Item
-                eventKey={'1227'}
+                eventKey={'1'}
                 onClick={(e) => {
                   setAlgorithmSelected('A-Star');
                   toggleAlgorithmWarning(false);
                 }}
               >
                 A-Star
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                eventKey={'2'}
+                onClick={(e) => {
+                  setAlgorithmSelected('Dijkstra');
+                  toggleAlgorithmWarning(false);
+                }}
+              >
+                Dijkstra's Algorithm
               </NavDropdown.Item>
             </NavDropdown>
             <Button
