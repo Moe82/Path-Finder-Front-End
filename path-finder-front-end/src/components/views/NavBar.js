@@ -32,12 +32,19 @@ const styles = {
 export default function NavBar(props) {
   const [algorithmSelected, setAlgorithmSelected] = useState();
   const [algorithmWarning, toggleAlgorithmWarning] = useState(false);
+  const [noPathWarning, toggleNoPathWarning] = useState(false);
   const visualize = () => {
+    let data;
     if (!algorithmSelected) {
       toggleAlgorithmWarning(true);
     }
     if (algorithmSelected === 'A-Star') {
-      let data = AStar(props.map);
+      data = AStar(props.map);
+    }
+    if (!data) {
+      toggleNoPathWarning(true);
+    } else {
+      toggleNoPathWarning(false);
       props.visualizeAStar(data[0], 4).then(() => {
         props.visualizeAStar(data[1], 5);
       });
@@ -91,6 +98,13 @@ export default function NavBar(props) {
       {algorithmWarning && (
         <Alert variant="danger">
           <p style={{ textAlign: 'center' }}>Please Select an algorithm!</p>
+        </Alert>
+      )}
+      {noPathWarning && (
+        <Alert variant="danger">
+          <p style={{ textAlign: 'center' }}>
+            Make sure a path exists between the start and end node!
+          </p>
         </Alert>
       )}
     </>
