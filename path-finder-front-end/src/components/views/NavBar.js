@@ -37,17 +37,18 @@ export default function NavBar(props) {
     let data;
     if (!algorithmSelected) {
       toggleAlgorithmWarning(true);
-    }
-    if (algorithmSelected === 'A-Star') {
-      data = AStar(props.map);
-    }
-    if (!data) {
-      toggleNoPathWarning(true);
     } else {
-      toggleNoPathWarning(false);
-      props.visualizeAStar(data[0], 4).then(() => {
-        props.visualizeAStar(data[1], 5);
-      });
+      if (algorithmSelected === 'A-Star') {
+        data = AStar(props.map);
+      }
+      if (!data) {
+        toggleNoPathWarning(true);
+      } else {
+        toggleNoPathWarning(false);
+        props.visualizeAStar(data[0], 4).then(() => {
+          props.visualizeAStar(data[1], 5);
+        });
+      }
     }
   };
 
