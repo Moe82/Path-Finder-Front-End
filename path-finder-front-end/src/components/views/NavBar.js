@@ -39,10 +39,13 @@ export default function NavBar(props) {
       toggleAlgorithmWarning(true);
     } else {
       switch (algorithmSelected) {
-        case 'A-Star':
-          data = AStar(props.map);
+        case 'A-Star (manhattan)':
+          data = AStar(props.map, 'manhattan');
           break;
-        case 'Dijkstra':
+        case 'A-Star (euclidean)':
+          data = AStar(props.map, 'euclidean');
+          break;
+        case "Dijkstra's Algorithm":
           data = Dijkstra(props.map);
           break;
       }
@@ -74,14 +77,23 @@ export default function NavBar(props) {
               <NavDropdown.Item
                 eventKey={'1'}
                 onClick={(e) => {
-                  setAlgorithmSelected('A-Star');
+                  setAlgorithmSelected('A-Star (manhattan)');
                   toggleAlgorithmWarning(false);
                 }}
               >
-                A-Star
+                A-Star (manhattan)
               </NavDropdown.Item>
               <NavDropdown.Item
                 eventKey={'2'}
+                onClick={(e) => {
+                  setAlgorithmSelected('A-Star (euclidean)');
+                  toggleAlgorithmWarning(false);
+                }}
+              >
+                A-Star (euclidean)
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                eventKey={'3'}
                 onClick={(e) => {
                   setAlgorithmSelected('Dijkstra');
                   toggleAlgorithmWarning(false);
