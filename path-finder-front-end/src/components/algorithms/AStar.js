@@ -1,8 +1,4 @@
-import React from 'react';
-import Node from '../views/Node';
-import ReactDOM from 'react';
-
-function AStar(m, start, end) {
+function AStar(m) {
   let nodesVisited = [];
 
   // object to represent each node on the map.
