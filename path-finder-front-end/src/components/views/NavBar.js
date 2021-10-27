@@ -69,7 +69,6 @@ export default function NavBar(props) {
               variant="primary"
               onClick={() => {
                 props.buildMap();
-                setAlgorithmSelected(false);
               }}
             >
               Reset
@@ -81,7 +80,6 @@ export default function NavBar(props) {
               onClick={() => {
                 if (props.visualizationInProgress) {
                   props.buildMap();
-                  setAlgorithmSelected(false);
                 } else visualize();
               }}
             >
