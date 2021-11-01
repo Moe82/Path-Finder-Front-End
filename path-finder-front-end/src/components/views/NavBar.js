@@ -30,7 +30,7 @@ const styles = {
 };
 
 export default function NavBar(props) {
-  const [algorithmSelected, setAlgorithmSelected] = useState();
+  const [algorithmSelected, setAlgorithm] = useState();
   const [algorithmWarning, toggleAlgorithmWarning] = useState(false);
   const [noPathWarning, toggleNoPathWarning] = useState(false);
   const visualize = () => {
@@ -77,7 +77,7 @@ export default function NavBar(props) {
               <NavDropdown.Item
                 eventKey={'1'}
                 onClick={(e) => {
-                  setAlgorithmSelected('A-Star (manhattan)');
+                  setAlgorithm('A-Star (manhattan)');
                   toggleAlgorithmWarning(false);
                 }}
               >
@@ -86,7 +86,7 @@ export default function NavBar(props) {
               <NavDropdown.Item
                 eventKey={'2'}
                 onClick={(e) => {
-                  setAlgorithmSelected('A-Star (euclidean)');
+                  setAlgorithm('A-Star (euclidean)');
                   toggleAlgorithmWarning(false);
                 }}
               >
@@ -95,7 +95,7 @@ export default function NavBar(props) {
               <NavDropdown.Item
                 eventKey={'3'}
                 onClick={(e) => {
-                  setAlgorithmSelected('Dijkstra');
+                  setAlgorithm('Dijkstra');
                   toggleAlgorithmWarning(false);
                 }}
               >
