@@ -31,7 +31,7 @@ const styles = {
 
 export default function NavBar(props) {
   const [algorithmSelected, setAlgorithm] = useState();
-  const [huristic, setHuristic] = useState('Manhattan');
+  const [heuristic, setHeuristic] = useState('Manhattan');
   const [algorithmWarning, toggleAlgorithmWarning] = useState(false);
   const [noPathWarning, toggleNoPathWarning] = useState(false);
   const [visualizationStarted, toggleVisualizationStarted] = useState(false);
@@ -50,7 +50,7 @@ export default function NavBar(props) {
     } else {
       switch (algorithmSelected) {
         case keyToAlgorithmMap[1]:
-          data = AStar(props.map, huristic);
+          data = AStar(props.map, heuristic);
           setNodesVisited(data[0].length);
           setPathLength(data[1].length);
           break;
@@ -104,13 +104,13 @@ export default function NavBar(props) {
                 </NavDropdown>
 
                 <NavDropdown
-                  title={'Huristic: ' + huristic}
+                  title={'Heuristic: ' + heuristic}
                   id="basic-nav-dropdown"
                 >
                   <NavDropdown.Item
                     eventKey={'1'}
                     onClick={(e) => {
-                      setHuristic('Manhattan');
+                      setHeuristic('Manhattan');
                     }}
                   >
                     Manhattan distance
@@ -118,7 +118,7 @@ export default function NavBar(props) {
                   <NavDropdown.Item
                     eventKey={'2'}
                     onClick={(e) => {
-                      setHuristic('euclidean');
+                      setHeuristic('Euclidean');
                     }}
                   >
                     Euclidean distance
@@ -167,8 +167,8 @@ export default function NavBar(props) {
       {visualizationStarted && (
         <Alert variant="success">
           <p style={{ textAlign: 'center' }}>
-            Algorithm: {algorithmSelected} &nbsp;&nbsp;&nbsp; Huristic:{' '}
-            {huristic} &nbsp;&nbsp;&nbsp; Nodes Visited:{' '}
+            Algorithm: {algorithmSelected} &nbsp;&nbsp;&nbsp; Heuristic:{' '}
+            {heuristic} &nbsp;&nbsp;&nbsp; Nodes Visited:{' '}
             {props.visualizationInProgress ? ' In Progress' : nodesVisited}{' '}
             &nbsp;&nbsp;&nbsp; Path Length:{' '}
             {props.visualizationInProgress ? ' In Progress' : pathLength}{' '}

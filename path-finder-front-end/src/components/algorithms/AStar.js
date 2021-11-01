@@ -1,5 +1,5 @@
 // TODO: code is very messy. Optimize before releasing.
-function AStar(m, huristic) {
+function AStar(m, heuristic) {
   let nodesVisited = [];
 
   // object to represent each node on the map.
@@ -25,9 +25,9 @@ function AStar(m, huristic) {
   }
 
   function heuristic(a, b) {
-    if (huristic === 'manhattan')
+    if (heuristic === 'manhattan')
       return Math.abs(b.x - a.x) + Math.abs(b.y - a.y);
-    else if (huristic === 'euclidean')
+    else if (heuristic === 'euclidean')
       return Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
   }
 
