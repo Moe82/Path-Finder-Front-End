@@ -1,3 +1,4 @@
+// TODO: code is very messy. Optimize before releasing.
 function AStar(m, huristic) {
   let nodesVisited = [];
 
