@@ -34,7 +34,7 @@ export default function NavBar(props) {
   const [huristic, setHuristic] = useState('manhattan');
   const [algorithmWarning, toggleAlgorithmWarning] = useState(false);
   const [noPathWarning, toggleNoPathWarning] = useState(false);
-  const [pathDisplayed, togglePathDisplayed] = useState(false);
+  const [visualizationStarted, toggleVisualizationStarted] = useState(false);
   const keyToAlgorithmMap = {
     1: 'A-Star',
     2: "Dijkstra's Algorithm",
@@ -55,7 +55,7 @@ export default function NavBar(props) {
         toggleNoPathWarning(true);
       } else {
         toggleNoPathWarning(false);
-        togglePathDisplayed(true);
+        toggleVisualizationStarted(true);
         props.visualizeAStar(data[0], 4).then(() => {
           props.visualizeAStar(data[1], 5).then(() => {
             props.toggleVisualizationInProgress(false);
@@ -73,7 +73,7 @@ export default function NavBar(props) {
             Pathfinding Visualizer
           </Navbar.Brand>
           <Nav className="me-auto">
-            {pathDisplayed === false && (
+            {visualizationStarted === false && (
               <>
                 <NavDropdown
                   title={algorithmSelected ? algorithmSelected : 'Algorithms'}
@@ -139,7 +139,7 @@ export default function NavBar(props) {
               onClick={() => {
                 if (!props.visualizationInProgress) {
                   props.buildMap();
-                  togglePathDisplayed(false);
+                  toggleVisualizationStarted(false);
                 }
               }}
             >
