@@ -34,6 +34,7 @@ export default function NavBar(props) {
   const [huristic, setHuristic] = useState('manhattan');
   const [algorithmWarning, toggleAlgorithmWarning] = useState(false);
   const [noPathWarning, toggleNoPathWarning] = useState(false);
+  const [pathDisplayed, togglePathDisplayed] = useState(false);
   const keyToAlgorithmMap = {
     1: 'A-Star',
     2: "Dijkstra's Algorithm",
@@ -54,6 +55,7 @@ export default function NavBar(props) {
         toggleNoPathWarning(true);
       } else {
         toggleNoPathWarning(false);
+        togglePathDisplayed(true);
         props.visualizeAStar(data[0], 4).then(() => {
           props.visualizeAStar(data[1], 5).then(() => {
             props.toggleVisualizationInProgress(false);
@@ -71,70 +73,77 @@ export default function NavBar(props) {
             Pathfinding Visualizer
           </Navbar.Brand>
           <Nav className="me-auto">
-            <NavDropdown
-              title={algorithmSelected ? algorithmSelected : 'Algorithms'}
-              id="basic-nav-dropdown"
-            >
-              <NavDropdown.Item
-                eventKey={'1'}
-                onClick={(e) => {
-                  setAlgorithm(keyToAlgorithmMap[1]);
-                  toggleAlgorithmWarning(false);
-                }}
-              >
-                {keyToAlgorithmMap[1]}
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                eventKey={'2'}
-                onClick={(e) => {
-                  setAlgorithm(keyToAlgorithmMap[2]);
-                  toggleAlgorithmWarning(false);
-                }}
-              >
-                {keyToAlgorithmMap[2]}
-              </NavDropdown.Item>
-            </NavDropdown>
+            {pathDisplayed === false && (
+              <>
+                <NavDropdown
+                  title={algorithmSelected ? algorithmSelected : 'Algorithms'}
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item
+                    eventKey={'1'}
+                    onClick={(e) => {
+                      setAlgorithm(keyToAlgorithmMap[1]);
+                      toggleAlgorithmWarning(false);
+                    }}
+                  >
+                    {keyToAlgorithmMap[1]}
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    eventKey={'2'}
+                    onClick={(e) => {
+                      setAlgorithm(keyToAlgorithmMap[2]);
+                      toggleAlgorithmWarning(false);
+                    }}
+                  >
+                    {keyToAlgorithmMap[2]}
+                  </NavDropdown.Item>
+                </NavDropdown>
 
-            <NavDropdown
-              title={'Huristic: ' + huristic}
-              id="basic-nav-dropdown"
-            >
-              <NavDropdown.Item
-                eventKey={'1'}
-                onClick={(e) => {
-                  setHuristic('manhattan');
-                }}
-              >
-                'Manhattan distance'
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                eventKey={'2'}
-                onClick={(e) => {
-                  setHuristic('euclidean');
-                }}
-              >
-                "Euclidean distance"
-              </NavDropdown.Item>
-            </NavDropdown>
+                <NavDropdown
+                  title={'Huristic: ' + huristic}
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item
+                    eventKey={'1'}
+                    onClick={(e) => {
+                      setHuristic('manhattan');
+                    }}
+                  >
+                    Manhattan distance
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    eventKey={'2'}
+                    onClick={(e) => {
+                      setHuristic('euclidean');
+                    }}
+                  >
+                    Euclidean distance
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <Button
+                  style={styles.btn}
+                  size="sm"
+                  variant="primary"
+                  onClick={() => {
+                    if (!props.visualizationInProgress) visualize();
+                  }}
+                >
+                  Visualize
+                </Button>
+              </>
+            )}
             <Button
               style={styles.resetBtn}
               size="sm"
               variant="primary"
               onClick={() => {
-                if (!props.visualizationInProgress) props.buildMap();
+                if (!props.visualizationInProgress) {
+                  props.buildMap();
+                  togglePathDisplayed(false);
+                }
               }}
             >
               Reset
-            </Button>
-            <Button
-              style={styles.btn}
-              size="sm"
-              variant="primary"
-              onClick={() => {
-                if (!props.visualizationInProgress) visualize();
-              }}
-            >
-              Visualize
             </Button>
           </Nav>
         </Container>
