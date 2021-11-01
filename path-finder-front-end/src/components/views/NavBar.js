@@ -31,22 +31,23 @@ const styles = {
 
 export default function NavBar(props) {
   const [algorithmSelected, setAlgorithm] = useState();
+  const [huristic, setHuristic] = useState('manhattan');
   const [algorithmWarning, toggleAlgorithmWarning] = useState(false);
   const [noPathWarning, toggleNoPathWarning] = useState(false);
+  const keyToAlgorithmMap = {
+    1: 'A-Star',
+    2: "Dijkstra's Algorithm",
+    3: 'BFS',
+  };
+
   const visualize = () => {
     let data;
     if (!algorithmSelected) {
       toggleAlgorithmWarning(true);
     } else {
       switch (algorithmSelected) {
-        case 'A-Star (manhattan)':
-          data = AStar(props.map, 'manhattan');
-          break;
-        case 'A-Star (euclidean)':
-          data = AStar(props.map, 'euclidean');
-          break;
-        case "Dijkstra's Algorithm":
-          data = Dijkstra(props.map);
+        case keyToAlgorithmMap[1]:
+          data = AStar(props.map, huristic);
           break;
       }
       if (!data) {
@@ -77,29 +78,42 @@ export default function NavBar(props) {
               <NavDropdown.Item
                 eventKey={'1'}
                 onClick={(e) => {
-                  setAlgorithm('A-Star (manhattan)');
+                  setAlgorithm(keyToAlgorithmMap[1]);
                   toggleAlgorithmWarning(false);
                 }}
               >
-                A-Star (manhattan)
+                {keyToAlgorithmMap[1]}
               </NavDropdown.Item>
               <NavDropdown.Item
                 eventKey={'2'}
                 onClick={(e) => {
-                  setAlgorithm('A-Star (euclidean)');
+                  setAlgorithm(keyToAlgorithmMap[2]);
                   toggleAlgorithmWarning(false);
                 }}
               >
-                A-Star (euclidean)
+                {keyToAlgorithmMap[2]}
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown
+              title={'Huristic: ' + huristic}
+              id="basic-nav-dropdown"
+            >
+              <NavDropdown.Item
+                eventKey={'1'}
+                onClick={(e) => {
+                  setHuristic('manhattan');
+                }}
+              >
+                'Manhattan distance'
               </NavDropdown.Item>
               <NavDropdown.Item
-                eventKey={'3'}
+                eventKey={'2'}
                 onClick={(e) => {
-                  setAlgorithm('Dijkstra');
-                  toggleAlgorithmWarning(false);
+                  setHuristic('euclidean');
                 }}
               >
-                Dijkstra's Algorithm
+                "Euclidean distance"
               </NavDropdown.Item>
             </NavDropdown>
             <Button
