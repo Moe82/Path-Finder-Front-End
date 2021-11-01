@@ -31,10 +31,12 @@ const styles = {
 
 export default function NavBar(props) {
   const [algorithmSelected, setAlgorithm] = useState();
-  const [huristic, setHuristic] = useState('manhattan');
+  const [huristic, setHuristic] = useState('Manhattan');
   const [algorithmWarning, toggleAlgorithmWarning] = useState(false);
   const [noPathWarning, toggleNoPathWarning] = useState(false);
   const [visualizationStarted, toggleVisualizationStarted] = useState(false);
+  const [nodesVisited, setNodesVisited] = useState();
+  const [pathLength, setPathLength] = useState();
   const keyToAlgorithmMap = {
     1: 'A-Star',
     2: "Dijkstra's Algorithm",
@@ -49,6 +51,8 @@ export default function NavBar(props) {
       switch (algorithmSelected) {
         case keyToAlgorithmMap[1]:
           data = AStar(props.map, huristic);
+          setNodesVisited(data[0].length);
+          setPathLength(data[1].length);
           break;
       }
       if (!data) {
@@ -106,7 +110,7 @@ export default function NavBar(props) {
                   <NavDropdown.Item
                     eventKey={'1'}
                     onClick={(e) => {
-                      setHuristic('manhattan');
+                      setHuristic('Manhattan');
                     }}
                   >
                     Manhattan distance
@@ -157,6 +161,18 @@ export default function NavBar(props) {
         <Alert variant="danger">
           <p style={{ textAlign: 'center' }}>
             Make sure a path exists between the start and end node!
+          </p>
+        </Alert>
+      )}
+      {visualizationStarted && (
+        <Alert variant="success">
+          <p style={{ textAlign: 'center' }}>
+            Algorithm: {algorithmSelected} &nbsp;&nbsp;&nbsp; Huristic:{' '}
+            {huristic} &nbsp;&nbsp;&nbsp; Nodes Visited:{' '}
+            {props.visualizationInProgress ? ' In Progress' : nodesVisited}{' '}
+            &nbsp;&nbsp;&nbsp; Path Length:{' '}
+            {props.visualizationInProgress ? ' In Progress' : pathLength}{' '}
+            &nbsp;&nbsp;&nbsp;
           </p>
         </Alert>
       )}
